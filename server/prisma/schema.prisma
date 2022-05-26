@@ -7,7 +7,7 @@ generator client {
 
 //usando sqlite no Prisma
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 

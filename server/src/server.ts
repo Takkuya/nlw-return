@@ -21,6 +21,7 @@ app.use(express.json());
 //arquivo routes
 app.use(routes);
 
-app.listen(3333, () => {
+//utilizar a variável PORt, caso ela não exista utilizar a 3333
+app.listen(process.env.PORT || 3333, () => {
   console.log("HTTP Server is running");
 });

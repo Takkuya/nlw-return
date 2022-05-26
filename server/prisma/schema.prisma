@@ -1,0 +1,26 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+//usando sqlite no Prisma
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+//entidade, criando tabela feedback
+model Feedback {
+  //colunas, se eu quiser trabalhar com algum valor especifico do banco de dados utlizado (por exemplo SQL), basta utilizar o @db, ex: @db.Varhar
+  id String @id @default(uuid()) //@id => primary key, coluna única || uuid() => universal unic id, sempre que a gente chamar essa função ele irá gerar um id único
+  type String
+  comment String
+  screenshot String? // => propriedade opcional, pode ser null
+
+
+
+  //criar tabela utilizando esse nome
+  @@map("feedbacks")
+}

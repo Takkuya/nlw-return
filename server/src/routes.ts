@@ -13,21 +13,27 @@ routes.post("/feedbacks", async (req, res) => {
   //desestruturando
   const { type, comment, screenshot } = req.body;
 
-  const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
-  const nodemailerMailAdapter = new NodemailerMailAdapter();
+  try {
+    const prismaFeedbacksRepository = new PrismaFeedbacksRepository();
+    const nodemailerMailAdapter = new NodemailerMailAdapter();
 
-  const submitFeedbackUseCase = new SubmitFeedbackUseCase(
-    prismaFeedbacksRepository,
-    nodemailerMailAdapter
-  );
+    const submitFeedbackUseCase = new SubmitFeedbackUseCase(
+      prismaFeedbacksRepository,
+      nodemailerMailAdapter
+    );
 
-  const feedback = await submitFeedbackUseCase.execute({
-    type,
-    comment,
-    screenshot,
-  });
+    const feedback = await submitFeedbackUseCase.execute({
+      type,
+      comment,
+      screenshot,
+    });
 
-  //201 => status de criação, algo foi criado
-  //retorno o feedback na requisição
-  return res.status(201).json({ data: feedback });
+    //201 => status de criação, algo foi criado
+    //retorno o feedback na requisição
+    return res.status(201).json({ data: feedback });
+  } catch (err) {
+    console.error(err);
+
+    return res.status(500).send();
+  }
 });
